@@ -38,7 +38,7 @@ const tasks = [
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/tasks', (req, res) => {
     res.json({message: tasks});
 })
 
@@ -62,7 +62,7 @@ app.put('/goto/:id', (req, res) => {
             tasks[index].status = newStatus;
             res.json({message: tasks});
         } else {
-            res.status(400).json({error : `you can not put ${tasks[index].title} from  ${statusArray[tasks[index].status]} to ${statusArray[newStatus]}`});
+            res.status(400).json({error : `you can not put ${tasks[index].title} from ${statusArray[tasks[index].status]} to ${statusArray[newStatus]}`});
         }
 
     } else {
@@ -89,7 +89,7 @@ app.delete('/:id', (req, res) => {
         tasks.splice(index,1);
         res.json({message: tasks});
     } else {
-        res.status(404).json({error : 'Not found'});
+        res.status(404);
     }
 })
 
@@ -104,7 +104,7 @@ app.put('/:id', (req, res) => {
             tasks[index].status = task.status;
             res.json({message: tasks[index]});
         } else {
-            res.status(400).json({error : `you can not put ${task.title} from  ${statusArray[tasks[index].status]} to ${statusArray[task.status]}`});
+            res.status(400).json({error : `you can not put ${task.title} from ${statusArray[tasks[index].status]} to ${statusArray[task.status]}`});
         }
     } else {
         res.status(404).json({error : 'Not found'});
@@ -114,3 +114,5 @@ app.put('/:id', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+module.exports = app;

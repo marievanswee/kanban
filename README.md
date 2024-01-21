@@ -18,3 +18,8 @@ OR
 ### `npm run start:frontend`
 
 The back end run on port 3030, the front and on port 3000
+
+
+To run backend test, you can go to the backend folder and run this command
+
+### `npm test`

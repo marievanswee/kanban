@@ -7,7 +7,7 @@ export function useFetchTasks() {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        fetch(apiPrefix)
+        fetch(apiPrefix+'tasks')
             .then((res) => res.json())
             .then((data) => {
                 setError(data.error)
