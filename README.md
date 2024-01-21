@@ -1,6 +1,10 @@
 # Kanban - Trello
 
-To start the project, go to global folder and run
+To start the project, go to global folder and run the following command to install packages
+### `npm run install`
+
+Then the following command
+
 ### `npm run start`
 
 With that, the back and the front will start
