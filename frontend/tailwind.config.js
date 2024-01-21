@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx}",
   ],
   theme: {
     screens: {
@@ -21,9 +21,6 @@ module.exports = {
       '4': '4px',
     },
     extend: {
-      colors: {
-        cyan: '#9cdbff',
-      },
       spacing: {
         '96': '24rem',
         '128': '32rem',

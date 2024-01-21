@@ -6,12 +6,10 @@ export const Button = (props) => {
         handleClick();
     }
 
-
-
     return (
         <div>
             <button
-                    className={color + " font-medium rounded-full text-sm px-5 py-2.5 text-center"}
+                    className={`text-white ${color} font-medium rounded-full text-sm px-5 py-2.5 text-center`}
                     onClick={handleClickButton}>{title}</button>
         </div>
     )

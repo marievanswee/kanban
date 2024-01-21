@@ -3,28 +3,39 @@ import {useState} from "react";
 import {Input} from "./Input";
 import {Label} from "./Label";
 import {Button} from "./Button";
+import {useNavigate} from "react-router-dom";
+
+export const statusArray = ['To Do', 'Doing', 'Done'];
+export const statusColor = ['bg-gray-400', 'bg-blue-400', 'bg-green-500'];
 
 export const Form = (props) => {
-    const {header, readOnly, subject, definition, state} = props
-    const [title, setTitle] = useState(subject ?? '');
-    const [description, setDescription] = useState(definition ?? '');
-    const [status, setStatus] = useState(state ?? '');
+    const {header, readOnly, task, handleClick} = props
+    const [title, setTitle] = useState(task?.title ?? '');
+    const [description, setDescription] = useState(task?.description ?? '');
+    const [status, setStatus] = useState(task?.status ?? 0);
+    const navigate = useNavigate();
+
     const handleChangeTitle = (value) => {
         setTitle(value);
     }
     const handleChangeDescription = (value) => {
-        console.log({value});
         setDescription(value);
     }
     const handleChangeStatus = (value) => {
-        setStatus(value.target.value);
+        setStatus(Number(value.target.value));
     }
 
     const handleSubmit = () => {
-        // hook to persist create or update data
+        handleClick({
+            title: title,
+            description: description,
+            status: status
+        });
     }
 
-    const statusArray = ['To Do', 'Doing', 'Done'];
+    const handleCancel = () => {
+        navigate('/');
+    }
 
     return (
         <div className="flex flex-col min-h-96 w-[700px] rounded overflow-hidden shadow-lg lg:flex p-10">
@@ -56,8 +67,8 @@ export const Form = (props) => {
                 </div>
 
                 <div className="flex flex-row space-x-3">
-                    <Button title="Submit" color="text-white bg-blue-700 hover:bg-blue-800" handleClick={handleSubmit}/>
-                    <Button title="Cancel" color="text-white bg-gray-500 hover:bg-gray-600" handleClick={handleSubmit}/>
+                    <Button title="Submit" color="bg-blue-400 hover:bg-blue-500" handleClick={handleSubmit}/>
+                    <Button title="Cancel" color="bg-gray-400 hover:bg-gray-500" handleClick={handleCancel}/>
                 </div>
 
             </div>
