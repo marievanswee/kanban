@@ -2,7 +2,7 @@ import {apiPrefix} from "./constants";
 import {useEffect, useState} from "react";
 
 export function useFetchTasks() {
-    const [cards, setCards] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -12,11 +12,11 @@ export function useFetchTasks() {
             .then((data) => {
                 setError(data.error)
                 setLoading(false)
-                setCards(data.message);
+                setTasks(data.message);
             })
     }, []);
 
-    return {cards, loading, error};
+    return {tasks, loading, error};
 }
 
 export function useFetchTaskById(id) {
@@ -44,7 +44,6 @@ export function useFetchTaskById(id) {
 
         fetchData();
 
-        // Fonction de nettoyage pour annuler la requête si le composant est démonté avant la fin de la requête.
         return () => {
             setLoading(false);
             setError(null);
@@ -57,7 +56,7 @@ export function useFetchTaskById(id) {
 
 
 export function useMoveTo() {
-    const [card, setCard] = useState();
+    const [task, setTask] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -79,13 +78,13 @@ export function useMoveTo() {
             }
             const data = await response.json();
 
-            setCard(data.message);
+            setTask(data.message);
         } finally {
             setLoading(false);
         }
     };
 
-    return { moveTo, card, loading, error };
+    return { moveTo, task, loading, error };
 }
 
 export function usePostTask() {
@@ -109,6 +108,9 @@ export function usePostTask() {
 
         try {
             const response = await fetch(apiPrefix, requestOptions);
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}`);
+            }
             const data = await response.json();
 
             setError(data.error);
@@ -130,7 +132,6 @@ export function useUpdateTask() {
 
     const updateTask = async (task, id) => {
         setLoading(true);
-        console.log({task});
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -145,13 +146,13 @@ export function useUpdateTask() {
         try {
             const response = await fetch(`${apiPrefix}${id}`, requestOptions);
             if (!response.ok) {
-                throw new Error(`Error ${response.status}`);
+                let error = await response.json();
+                setError(error.error);
+                throw new Error(error.error);
             }
             const data = await response.json();
 
             setCard(data.message);
-        } catch (error) {
-            setError(error);
         } finally {
             setLoading(false);
         }
@@ -161,7 +162,7 @@ export function useUpdateTask() {
 }
 
 export function useDeleteTask() {
-    const [cards, setCards] = useState();
+    const [tasks, setTasks] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -174,10 +175,13 @@ export function useDeleteTask() {
 
         try {
             const response = await fetch(`${apiPrefix}${id}`, requestOptions);
+            if (!response.ok) {
+                throw new Error(`Error ${response.status}`);
+            }
             const data = await response.json();
 
             setError(data.error);
-            setCards(data.message);
+            setTasks(data.message);
         } catch (error) {
             setError(error);
         } finally {
@@ -185,5 +189,5 @@ export function useDeleteTask() {
         }
     };
 
-    return { deleteTask, cards, loading, error };
+    return { deleteTask, tasks, loading, error };
 }

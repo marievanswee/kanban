@@ -58,7 +58,7 @@ app.put('/goto/:id', (req, res) => {
     let id = req.params.id;
     let index = tasks.findIndex((task) => task.id === Number(id));
     if(tasks[index]) {
-        if(tasks[index].status + 1 === newStatus || tasks[index].status - 1 === newStatus) {
+        if(tasks[index].status + 1 === newStatus || tasks[index].status - 1 === newStatus || tasks[index].status === newStatus) {
             tasks[index].status = newStatus;
             res.json({message: tasks});
         } else {
@@ -100,8 +100,12 @@ app.put('/:id', (req, res) => {
     if(tasks[index]) {
         tasks[index].title = task.title;
         tasks[index].description = task.description;
-        tasks[index].status = task.status;
-        res.json({message: tasks[index]});
+        if(tasks[index].status + 1 === task.status || tasks[index].status - 1 === task.status || tasks[index].status === task.status) {
+            tasks[index].status = task.status;
+            res.json({message: tasks[index]});
+        } else {
+            res.status(400).json({error : `you can not put ${task.title} from  ${statusArray[tasks[index].status]} to ${statusArray[task.status]}`});
+        }
     } else {
         res.status(404).json({error : 'Not found'});
     }

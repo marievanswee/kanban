@@ -24,7 +24,7 @@ export const Card  = (props) => {
     }
 
     const handleDelete = (id) => {
-        deleteTask(id).then(res => {
+        deleteTask(id).then(() => {
             window.location.reload();
         });
     }

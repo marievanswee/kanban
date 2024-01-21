@@ -1,5 +1,3 @@
-import {useState} from "react";
-
 export const Button = (props) => {
     const {title, color, handleClick} = props;
     const handleClickButton = () => {

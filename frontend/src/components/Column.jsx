@@ -9,8 +9,7 @@ export const ItemTypes = {
 
 export const Column = (props) => {
     const {cards, status, handleDisplayError} = props;
-    const { moveTo, error } = useMoveTo();
-
+    const { moveTo } = useMoveTo();
 
     const [{ isOver }, dropRef] = useDrop(
         () => ({
@@ -30,7 +29,6 @@ export const Column = (props) => {
         []
     )
 
-    //console.log({displayError});
     return (
         <>
             <div className={`flex flex-col gap-4 w-80 ${isOver ? "bg-slate-200" : ""}`} ref={dropRef}>

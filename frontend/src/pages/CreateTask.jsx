@@ -6,7 +6,7 @@ export const CreateTask = () => {
     const { postTask } = usePostTask();
     const navigate = useNavigate();
     const handleCreate = (task) => {
-        postTask(task).then((data) => {
+        postTask(task).then(() => {
             navigate('/')
         });
     }
